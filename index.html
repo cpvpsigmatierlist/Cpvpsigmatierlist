@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cpvpsigmatierlist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0e0e0e;
+      color: #f5f5f5;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #444;
+      text-align: center;
+    }
+    th {
+      background-color: #1e1e1e;
+    }
+    .tier {
+      font-weight: bold;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    .HT1 { background-color: #ffd700; color: #000; }
+    .LT1 { background-color: #ffa500; color: #000; }
+    .HT2 { background-color: #ff8c00; color: #fff; }
+    .LT2 { background-color: #ff6347; color: #fff; }
+    .HT3 { background-color: #dc143c; color: #fff; }
+    .LT3 { background-color: #b22222; color: #fff; }
+    .HT4 { background-color: #8b0000; color: #fff; }
+    .LT4 { background-color: #4b0082; color: #fff; }
+    .HT5 { background-color: #2f4f4f; color: #fff; }
+    .LT5 { background-color: #1c1c1c; color: #fff; }
+    form {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    input, select, button {
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #adminLogin {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>cpvpsigmatierlist</h1>
+
+  <div id="adminLogin">
+    <input type="password" id="adminPass" placeholder="Admin Passwort" />
+    <button onclick="loginAsAdmin()">Login</button>
+  </div>
+
+  <form id="addPlayerForm">
+    <input type="text" placeholder="Name" id="name" required />
+    <select id="overall">
+      <option>HT1</option><option>LT1</option><option>HT2</option><option>LT2</option>
+      <option>HT3</option><option>LT3</option><option>HT4</option><option>LT4</option>
+      <option>HT5</option><option>LT5</option>
+    </select>
+    <input type="text" placeholder="Vanilla Tier" id="vanilla" required />
+    <button type="submit">Spieler hinzufügen</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Overall Tier</th>
+        <th>Vanilla</th>
+      </tr>
+    </thead>
+    <tbody id="rankingTable">
+    </tbody>
+  </table>
+
+  <script>
+    function loginAsAdmin() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === 'admin123') {
+        document.getElementById('addPlayerForm').style.display = 'grid';
+        document.getElementById('adminLogin').style.display = 'none';
+      } else {
+        alert('Falsches Passwort!');
+      }
+    }
+
+    document.getElementById('addPlayerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const overall = document.getElementById('overall').value;
+      const vanilla = document.getElementById('vanilla').value;
+
+      const row = `<tr>
+        <td>${name}</td>
+        <td><span class="tier ${overall}">${overall}</span></td>
+        <td><span class="tier ${vanilla}">${vanilla}</span></td>
+      </tr>`;
+
+      document.getElementById('rankingTable').insertAdjacentHTML('beforeend', row);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
